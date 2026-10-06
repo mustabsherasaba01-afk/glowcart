@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaCheckCircle, FaHeart, FaMagic, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { FaBars, FaCheckCircle, FaHeart, FaMagic, FaShoppingCart, FaTimes, FaUser } from 'react-icons/fa';
 import { NavLink, Route, Routes } from 'react-router-dom';
 
 const categories = [
@@ -389,6 +389,8 @@ function RegisterPage() {
 }
 
 function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -400,12 +402,27 @@ function App() {
           </div>
         </div>
 
-        <nav className="main-nav">
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/products">Shop</NavLink>
-          <NavLink to="/quiz">Skin Quiz</NavLink>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/register">Register</NavLink>
+        <button
+          className="menu-toggle"
+          type="button"
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={isMenuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setIsMenuOpen((open) => !open)}
+        >
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+
+        <nav
+          className={`main-nav${isMenuOpen ? ' is-open' : ''}`}
+          id="primary-navigation"
+          aria-label="Main navigation"
+        >
+          <NavLink to="/" onClick={() => setIsMenuOpen(false)}>Home</NavLink>
+          <NavLink to="/products" onClick={() => setIsMenuOpen(false)}>Shop</NavLink>
+          <NavLink to="/quiz" onClick={() => setIsMenuOpen(false)}>Skin Quiz</NavLink>
+          <NavLink to="/login" onClick={() => setIsMenuOpen(false)}>Login</NavLink>
+          <NavLink to="/register" onClick={() => setIsMenuOpen(false)}>Register</NavLink>
         </nav>
 
         <div className="nav-icons">
